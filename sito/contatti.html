@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contatti | Villani</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0F172A;
+      color: #fff;
+    }
+
+    body {
+      overflow: hidden;
+      background: #0F172A;
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 4;
+      height: 82px;
+      background: rgba(0, 0, 0, 0.82);
+      border-bottom: 2px solid rgba(255,255,255,0.12);
+    }
+
+    .drone-background {
+      position: fixed;
+      top: 82px;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      height: calc(100vh - 82px);
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.9;
+    }
+
+    .center-column {
+      position: fixed;
+      top: 82px;
+      bottom: 0;
+      left: 50%;
+      z-index: 1;
+      width: 33.333vw;
+      transform: translateX(-50%);
+      border-left: 4px solid #000;
+      border-right: 4px solid #000;
+      background: rgba(0,0,0,0.12);
+      backdrop-filter: blur(13px);
+      -webkit-backdrop-filter: blur(13px);
+      pointer-events: none;
+    }
+
+    .contact-overlay {
+      position: fixed;
+      top: 82px;
+      left: 50%;
+      z-index: 3;
+      width: 33.333vw;
+      padding: 52px 24px 30px;
+      transform: translateX(-50%);
+      color: #fff;
+      border: 1px solid #000;
+      border-top: 0;
+      border-radius: 0 0 18px 18px;
+      background: #000;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: clamp(1rem, 1.6vw, 1.35rem);
+      line-height: 1.8;
+      text-align: center;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+      box-shadow: 0 18px 35px rgba(0,0,0,0.32);
+    }
+
+    .contact-line {
+      min-height: 1.8em;
+    }
+
+    .contact-line + .contact-line {
+      margin-top: 28px;
+    }
+
+    .topbar-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 7%;
+    }
+
+    .brand-menu {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      position: relative;
+      display: inline-block;
+      padding-bottom: 11px;
+      color: #fff;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-decoration: none;
+    }
+
+    .logo::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 7px;
+      background: linear-gradient(to right, #009246 0 33.33%, #fff 33.33% 66.66%, #ce2b37 66.66% 100%);
+    }
+
+    .brand-dropdown {
+      position: absolute;
+      top: calc(50% + 20px);
+      left: 0;
+      display: grid;
+      width: 100%;
+      padding: 10px 0;
+      border: 0;
+      border-radius: 0 0 14px 14px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .brand-dropdown a {
+      padding: 11px 16px;
+      color: #fff;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .brand-dropdown a:hover,
+    .brand-dropdown a:focus-visible {
+      background: rgba(130,197,212,0.2);
+    }
+
+    .brand-menu:hover .brand-dropdown,
+    .brand-menu:focus-within .brand-dropdown {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .brand-menu.is-open .brand-dropdown {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .back-link {
+      display: inline-block;
+      min-height: 52px;
+      padding: 0 24px;
+      border: 1px solid #0F172A;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #82c5d4, #0F172A);
+      color: #000;
+      text-decoration: none;
+      font-weight: 700;
+      line-height: 52px;
+      transition: transform 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: #000;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 700px) {
+      .topbar { height: 64px; }
+      .drone-background {
+        top: 64px;
+        left: 50%;
+        width: 165%;
+        height: calc(100vh - 64px);
+        transform: translateX(-50%);
+      }
+      .center-column {
+        top: 64px;
+        width: 100vw;
+      }
+      .contact-overlay {
+        top: 64px;
+        width: calc(100vw - 32px);
+      }
+      .topbar-inner { padding: 0 5%; }
+      .logo { padding-bottom: 7px; font-size: 1.05rem; }
+      .logo::after { height: 5px; }
+      .brand-dropdown {
+        top: calc(50% + 12px);
+        background: #000;
+      }
+      .back-link {
+        min-height: 48px;
+        padding: 0 22px;
+        line-height: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-menu">
+        <a class="logo" href="index.html" aria-haspopup="true" aria-expanded="false">VILLANI</a>
+        <nav class="brand-dropdown" aria-label="Navigazione rapida">
+          <a href="index.html">Home</a>
+          <a href="contatti.html">Contatti</a>
+          <a href="index.html#reel">reels</a>
+        </nav>
+      </div>
+      <a class="back-link" href="index.html">Indietro</a>
+    </div>
+  </header>
+
+  <img class="drone-background" src="video/droneAir3s.png" alt="Drone">
+  <div class="center-column" aria-hidden="true"></div>
+  <div class="contact-overlay" aria-label="Contatti">
+    <div class="contact-line" id="email-line"></div>
+    <div class="contact-line" id="phone-line"></div>
+  </div>
+
+  <script>
+    const contactLines = [
+      { element: document.getElementById('email-line'), text: 'Email: ..........' },
+      { element: document.getElementById('phone-line'), text: 'Telefono: +39 ..........' }
+    ];
+
+    function typeContactLine(line, index) {
+      let characterIndex = 0;
+
+      function typeNextCharacter() {
+        line.element.textContent = line.text.slice(0, characterIndex);
+        characterIndex += 1;
+
+        if (characterIndex <= line.text.length) {
+          window.setTimeout(typeNextCharacter, 65);
+        } else if (contactLines[index + 1]) {
+          window.setTimeout(() => typeContactLine(contactLines[index + 1], index + 1), 180);
+        }
+      }
+
+      typeNextCharacter();
+    }
+
+    typeContactLine(contactLines[0], 0);
+
+    const brandMenu = document.querySelector('.brand-menu');
+    const brandLogo = brandMenu.querySelector('.logo');
+    const brandDropdownLinks = brandMenu.querySelectorAll('.brand-dropdown a');
+
+    brandDropdownLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        brandMenu.classList.remove('is-open');
+        brandLogo.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    brandLogo.addEventListener('click', (event) => {
+      if (window.matchMedia('(max-width: 700px)').matches && !brandMenu.classList.contains('is-open')) {
+        event.preventDefault();
+        brandMenu.classList.add('is-open');
+        brandLogo.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!brandMenu.contains(event.target)) {
+        brandMenu.classList.remove('is-open');
+        brandLogo.setAttribute('aria-expanded', 'false');
+      }
+    });
+  </script>
+
+</body>
+</html>
